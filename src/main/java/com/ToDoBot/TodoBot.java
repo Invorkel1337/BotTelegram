@@ -9,6 +9,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 @Component
 public class TodoBot extends TelegramLongPollingBot {
 
+    //Автоматом сделалось без него не работает
     @Override
     public String getBotUsername() {
         return "TodoListHelperBot";
@@ -19,6 +20,7 @@ public class TodoBot extends TelegramLongPollingBot {
         return "7813592997:AAFkxkZSJxXWp9HTJZB28k4gigsQu79iXjw";
     }
 
+    //Я не понял как, тут еще надо написать elif если уже есть сообщениях в чате
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
@@ -35,7 +37,6 @@ public class TodoBot extends TelegramLongPollingBot {
         SendMessage message = new SendMessage();
         message.setChatId(String.valueOf(chatId));
         message.setText(text);
-
         try {
             execute(message);
         } catch (TelegramApiException e) {
