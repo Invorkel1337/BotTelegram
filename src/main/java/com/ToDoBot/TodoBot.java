@@ -1,5 +1,6 @@
 package com.ToDoBot;
 
+import com.ToDoBot.service.impl.TaskService;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -8,6 +9,8 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @Component
 public class TodoBot extends TelegramLongPollingBot {
+
+    TaskService taskService;
 
     //Автоматом сделалось без него не работает
     @Override
@@ -29,6 +32,14 @@ public class TodoBot extends TelegramLongPollingBot {
 
             if (messageText.startsWith("/start")) {
                 sendMessage(chatId, "Добро пожаловать в To-Do List Bot!");
+            } else if (messageText.startsWith("/addtask")) {
+                String task = messageText.substring(5).trim();
+                if (!task.isEmpty()) {
+                    taskService.addTask(task);
+                    sendMessage(chatId, "Задача успешно добавлена!");
+                } else {
+                    sendMessage(chatId, "Укажите задачу после команды /addtask.");
+                }
             }
         }
     }
