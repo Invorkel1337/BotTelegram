@@ -23,7 +23,6 @@ public class TodoBot extends TelegramLongPollingBot {
         return "7813592997:AAFkxkZSJxXWp9HTJZB28k4gigsQu79iXjw";
     }
 
-    //Я не понял как, тут еще надо написать elif если уже есть сообщениях в чате
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
@@ -39,6 +38,27 @@ public class TodoBot extends TelegramLongPollingBot {
                     sendMessage(chatId, "Задача успешно добавлена!");
                 } else {
                     sendMessage(chatId, "Укажите задачу после команды /addtask.");
+                }
+                //Я чувствую себя дебилом мне половину сделала idea, но я не понимаю нахуя тут catch
+                // Тыкни в edittask проверь тоже там
+            } else if (messageText.startsWith("/edittask")) {
+                String[] parts = messageText.substring(5).trim().split(" ", 2);
+                if (parts.length == 2) {
+                    try {
+                        Long taskId = Long.parseLong(parts[0]);
+                        String newTaskDescription = parts[1];
+                        boolean isEdited = taskService.editTask(taskId, newTaskDescription);
+
+                        if (isEdited) {
+                            sendMessage(chatId, "Задача успешно отредактирована!");
+                        } else {
+                            sendMessage(chatId, "Задача с ID " + taskId + " не найдена.");
+                        }
+                    } catch (NumberFormatException e) {
+                        sendMessage(chatId, "Неверный формат ID. Пожалуйста, введите корректное число.");
+                    }
+                } else {
+                    sendMessage(chatId, "Неверный формат команды. Используйте: /edittask <ID> <новое описание>");
                 }
             }
         }
