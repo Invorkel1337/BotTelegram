@@ -42,7 +42,7 @@ public class TodoBot extends TelegramLongPollingBot {
                     sendMessage(chatId, "Укажите задачу после команды /addtask.");
                 }
                 //Я чувствую себя дебилом мне половину сделала idea, но я не понимаю нахуя тут catch
-                // Тыкни в edittask проверь тоже там
+                // Тыкни в edittask проверь тоже там1
             } else if (messageText.startsWith("/edittask")) {
                 String[] parts = messageText.substring(9).trim().split(" ", 2);
                 if (parts.length == 2) {
