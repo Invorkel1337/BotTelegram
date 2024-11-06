@@ -14,7 +14,7 @@ public class TodoBot extends TelegramLongPollingBot {
     @Autowired
     TaskService taskService;
 
-    //Автоматом сделалось без него не работает
+    //Автоматом сделалось без него не работает1
     @Override
     public String getBotUsername() {
         return "TodoListHelperBot";
