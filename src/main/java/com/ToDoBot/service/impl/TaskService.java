@@ -3,16 +3,19 @@ package com.ToDoBot.service.impl;
 import com.ToDoBot.dto.TaskData;
 import com.ToDoBot.entity.Task;
 import com.ToDoBot.repository.TaskRepository;
-import org.jvnet.hk2.annotations.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
 /**
  * Сервис для сохранения списка задачи в БД.
  */
+
+
 @Service
 public class TaskService {
 
+    @Autowired
     private TaskRepository taskRepository;
 
     public TaskData addTask(String description) {
@@ -21,7 +24,7 @@ public class TaskService {
         task.setIsCompleted(false);
         return convertToDTO(taskRepository.save(task));
     }
-    //Хз пока будет работаь нет
+
     public boolean editTask(Long id, String newDescription) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
@@ -38,3 +41,4 @@ public class TaskService {
         return dto;
     }
 }
+
