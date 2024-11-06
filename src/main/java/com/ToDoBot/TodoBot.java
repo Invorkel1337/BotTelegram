@@ -32,7 +32,7 @@ public class TodoBot extends TelegramLongPollingBot {
             if (messageText.startsWith("/start")) {
                 sendMessage(chatId, "Добро пожаловать в To-Do List Bot!");
             } else if (messageText.startsWith("/addtask")) {
-                String task = messageText.substring(5).trim();
+                String task = messageText.substring(8).trim();
                 if (!task.isEmpty()) {
                     taskService.addTask(task);
                     sendMessage(chatId, "Задача успешно добавлена!");
@@ -42,7 +42,7 @@ public class TodoBot extends TelegramLongPollingBot {
                 //Я чувствую себя дебилом мне половину сделала idea, но я не понимаю нахуя тут catch
                 // Тыкни в edittask проверь тоже там
             } else if (messageText.startsWith("/edittask")) {
-                String[] parts = messageText.substring(5).trim().split(" ", 2);
+                String[] parts = messageText.substring(9).trim().split(" ", 2);
                 if (parts.length == 2) {
                     try {
                         Long taskId = Long.parseLong(parts[0]);

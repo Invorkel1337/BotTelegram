@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Service
 public class TaskService {
 
-    @Autowired
     private TaskRepository taskRepository;
 
     public TaskData addTask(String description) {
@@ -28,7 +27,7 @@ public class TaskService {
                 .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
         task.setTaskDescription(newDescription);
         taskRepository.save(task);
-        return false;
+        return true;
     }
 
     private TaskData convertToDTO(Task task) {
