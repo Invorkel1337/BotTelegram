@@ -56,11 +56,10 @@ public class TodoBot extends TelegramLongPollingBot {
                         }
                     } catch (NumberFormatException e) {
                         sendMessage(chatId, "Неверный формат ID. Пожалуйста, введите корректное число.");
+                    } catch (IllegalArgumentException e) {
+                        sendMessage(chatId, e.getMessage());
                     }
-                } else {
-                    sendMessage(chatId, "Неверный формат команды. Используйте: /edittask <ID> <новое описание>");
                 }
-
             } else if (messageText.startsWith("/delete")) {
                 String parts = messageText.substring(7).trim();
                 if(!parts.isEmpty()) {
@@ -70,18 +69,16 @@ public class TodoBot extends TelegramLongPollingBot {
                         sendMessage(chatId, "Задача успешно удалена!");
                     } catch (NumberFormatException e) {
                         sendMessage(chatId, "Введите ID задачи");
+                    } catch (IllegalArgumentException e){
+                        sendMessage(chatId,e.getMessage());
                     }
-                }else{
-                    sendMessage(chatId,"Неверный формат команды. Используейте:/delete <ID>");
                 }
             }
             //} else if (messageText.startsWith("/listtask")){
             //try {
             //}
-
         }
     }
-
     private void sendMessage(long chatId, String text) {
         SendMessage message = new SendMessage();
         message.setChatId(String.valueOf(chatId));

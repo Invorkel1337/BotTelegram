@@ -3,6 +3,7 @@ package com.ToDoBot.service.impl;
 import com.ToDoBot.dto.TaskData;
 import com.ToDoBot.entity.Task;
 import com.ToDoBot.repository.TaskRepository;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class TaskService {
 
     public boolean editTask(Long id, String newDescription) {
         Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Задача с ID " + id + " не найдена."));
         task.setTaskDescription(newDescription);
         taskRepository.save(task);
         return true;
@@ -35,6 +36,8 @@ public class TaskService {
     public void deleteTask(long id){
         if (taskRepository.existsById(id)) {
             taskRepository.deleteById(id);
+        }else{
+            throw new IllegalArgumentException("Такого ID нет");
         }
    }
 
