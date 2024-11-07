@@ -32,6 +32,11 @@ public class TaskService {
         taskRepository.save(task);
         return true;
     }
+    public void deleteTask(long id){
+        if (taskRepository.existsById(id)) {
+            taskRepository.deleteById(id);
+        }
+   }
 
     private TaskData convertToDTO(Task task) {
         TaskData dto = new TaskData();

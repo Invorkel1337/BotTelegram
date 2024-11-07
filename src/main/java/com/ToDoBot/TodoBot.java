@@ -41,10 +41,8 @@ public class TodoBot extends TelegramLongPollingBot {
                 } else {
                     sendMessage(chatId, "Укажите задачу после команды /addtask.");
                 }
-                //Я чувствую себя дебилом мне половину сделала idea, но я не понимаю нахуя тут catch
-                // Тыкни в edittask проверь тоже там1111
-            } else if (messageText.startsWith("/edittask")) {
-                String[] parts = messageText.substring(9).trim().split(" ", 2);
+            } else if (messageText.startsWith("/edit")) {
+                String[] parts = messageText.substring(5).trim().split(" ", 2);
                 if (parts.length == 2) {
                     try {
                         Long taskId = Long.parseLong(parts[0]);
@@ -62,7 +60,25 @@ public class TodoBot extends TelegramLongPollingBot {
                 } else {
                     sendMessage(chatId, "Неверный формат команды. Используйте: /edittask <ID> <новое описание>");
                 }
+
+            } else if (messageText.startsWith("/delete")) {
+                String parts = messageText.substring(7).trim();
+                if(!parts.isEmpty()) {
+                    try {
+                        Long longId = Long.parseLong(parts);
+                        taskService.deleteTask(longId);
+                        sendMessage(chatId, "Задача успешно удалена!");
+                    } catch (NumberFormatException e) {
+                        sendMessage(chatId, "Введите ID задачи");
+                    }
+                }else{
+                    sendMessage(chatId,"Неверный формат команды. Используейте:/delete <ID>");
+                }
             }
+            //} else if (messageText.startsWith("/listtask")){
+            //try {
+            //}
+
         }
     }
 
